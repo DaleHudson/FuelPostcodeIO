@@ -50,4 +50,18 @@ class PostcodeIO
 
 		return $this->curl_request($url);
 	}
+
+	/**
+	 * Validate postcode
+	 *
+	 * @param string $postcode
+	 * 
+	 * @return mixed
+	 */
+	public function valid_lookup($postcode)
+	{
+		$url = static::API_URL . static::API_POSTCODE_ENDPOINT . "/" . $postcode . "/validate";
+
+		return $this->curl_request($url);
+	}
 }
