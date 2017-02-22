@@ -2,7 +2,7 @@
 
 namespace FuelPostcodeIO;
 
-class Model_Locations extends \Orm\Model
+class Model_Location extends \Orm\Model
 {
 	protected static $_table_name = "location";
 
@@ -47,12 +47,12 @@ class Model_Locations extends \Orm\Model
 			'data_type' => 'varchar',
 		),
 		'region' => array(
-			'data_type' => 'varchar'
+			'data_type' => 'varchar',
 		),
-		'losa' => array(
+		'lsoa' => array(
 			'data_type' => 'varchar',
  		),
-		'mosa' => array(
+		'msoa' => array(
 			'data_type' => 'varchar',
 		),
 		'incode' => array(
@@ -124,4 +124,49 @@ class Model_Locations extends \Orm\Model
 			'events' => array('before_save', 'after_save', 'after_load'),
 		),
 	);
+
+	###################################
+	# INSTANCE
+	###################################
+
+	/**
+	 * Save the retrieved location data
+	 *
+	 * @param object $location_data
+	 *
+	 * @return bool
+	 *
+	 * @throws \Exception
+	 */
+	public function save_location($location_data)
+	{
+		foreach ($location_data as $key => $value) {
+
+			if ($key == "codes") {
+				$this->set_codes($value);
+			}
+
+			call_user_func(array($this, 'set_' . $key), $value);
+		}
+
+		return $this->save();
+
+	}
+
+	/**
+	 * Set the codes data to the model
+	 *
+	 * Foreach through the code data, and set the values to the model. All code fields have been
+	 * prefixed with "code".
+	 *
+	 * @param $code_data
+	 *
+	 * @return void
+	 */
+	private function set_codes($code_data)
+	{
+		foreach ($code_data as $key => $data) {
+			call_user_func(array($this, 'set_code_' . $key), $data);
+		}
+	}
 }
