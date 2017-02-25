@@ -19,6 +19,11 @@ class Test_PostcodeIO extends FuelPostcodeIOTestCase
 		$this->assertInternalType('object', $result);
 		$this->assertObjectHasAttribute('result', $result);
 		$this->assertEquals(200, $result->status);
+
+		// Assertions for result->result object
+		$this->assertObjectHasAttribute('postcode', $result->result);
+		$this->assertObjectHasAttribute('longitude', $result->result);
+		$this->assertObjectHasAttribute('latitude', $result->result);
 	}
 
 	/**
