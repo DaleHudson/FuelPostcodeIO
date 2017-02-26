@@ -14,6 +14,11 @@ abstract class FuelPostcodeIOTestCase extends TestCase
 	protected $postcode = "B77 1JR";
 
 	/**
+	 * @var string
+	 */
+	protected $invalid_postcode = "CV215 6GHT";
+
+	/**
 	 * @var object
 	 */
 	protected $faker;
