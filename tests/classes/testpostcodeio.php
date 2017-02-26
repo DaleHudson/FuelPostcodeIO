@@ -40,4 +40,30 @@ class Test_PostcodeIO extends FuelPostcodeIOTestCase
 		$this->assertEquals(200, $result->status);
 		$this->assertTrue($result->result);
 	}
+
+	/**
+	 * @group Postcode
+	 *
+	 * @expectedException RequestStatusException
+	 */
+	public function test_unsuccessful_postcode_lookup()
+	{
+		$postcodeIO = new PostcodeIO();
+		$postcodeIO->lookup($this->invalid_postcode);
+	}
+
+	/**
+	 * @group Postcode
+	 */
+	public function test_unsuccessful_postcode_valid_lookup()
+	{
+		$postcodeIO = new PostcodeIO();
+		$result = $postcodeIO->valid_lookup($this->invalid_postcode);
+
+		$this->assertInstanceOf('stdClass', $result);
+		$this->assertInternalType('object', $result);
+		$this->assertObjectHasAttribute('result', $result);
+		$this->assertEquals(200, $result->status);
+		$this->assertFalse($result->result);
+	}
 }
