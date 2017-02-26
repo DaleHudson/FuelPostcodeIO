@@ -37,6 +37,20 @@ class Test_Model_Location extends FuelPostcodeIOTestCase
 	}
 
 	/**
+	 * @group Postcode
+	 * @group PostcodeModel
+	 *
+	 * @expectedException Database_Exception
+	 */
+	public function test_unsuccessful_save_location()
+	{
+		$data = $this->create_location_data();
+		unset($data->postcode);
+
+		$this->model->save_location($data);
+	}
+
+	/**
 	 * Build up a dummy location model that will replicate a successful response from
 	 * postcodes.io api
 	 *
