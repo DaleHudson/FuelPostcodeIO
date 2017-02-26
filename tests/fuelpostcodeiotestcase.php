@@ -12,4 +12,28 @@ abstract class FuelPostcodeIOTestCase extends TestCase
 	 * @var string
 	 */
 	protected $postcode = "B77 1JR";
+
+	/**
+	 * @var object
+	 */
+	protected $faker;
+
+	public function setUp()
+	{
+		parent::setUp();
+
+		\Migrate::latest('FuelPostcodeIO', 'package');
+
+		\DBUtil::truncate_table('location');
+
+		// Set up faker
+		$this->faker = \Faker\Factory::create("en_GB");
+	}
+
+	public function tearDown()
+	{
+		parent::tearDown();
+
+		unset($this->faker);
+	}
 }
